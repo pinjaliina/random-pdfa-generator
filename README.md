@@ -11,6 +11,7 @@ Requires:
 * Linux (or WSL)
 * Bash
 * pwgen (for producing some random content)
+* uuid (for generating an UUID v4)
 * vim (for writing PostScript)
 * GhostScript (for writing the PDF)
 
