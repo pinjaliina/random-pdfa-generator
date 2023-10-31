@@ -8,20 +8,23 @@
 # is used; see https://stackoverflow.com/questions/1659147/\
 # how-to-use-ghostscript-to-convert-pdf-to-pdf-a-or-pdf-x for details.
 # 
-# Requires: pwgen, vim, ghostsript
+# Requires: ghostscript, pwgen, uuid, vim
 #
 if [[ -z $1 || $1 == '-h' || $1 == '--help' || $1 == '-?' ]]; then
 	echo "Create a PDF/A file with random contents."
 	echo "Usage:"
 	echo -e "\t$0 <filename.pdf>"
 	echo -e "\t\t-- OR --"
-	echo -e "\t$0 -u, --name-output-by-uuidv4"
+	echo -e "\t$0 -u, --name-output-by-uuidv4 [output_path]"
 	exit 1
 fi
 my_pdffn=$1
 my_uuidv4=$(uuid -v 4)
 if [[ $1 == '-u' || $1 == '--name-output-by-uuidv4' ]]; then
 	my_pdffn="$(pwd)/$my_uuidv4.pdf"
+fi
+if [[ $1 == '-u' || $1 == '--name-output-by-uuidv4' ]] && [[ -d $2 ]]; then
+	my_pdffn="$2/$my_uuidv4.pdf"
 fi
 my_psfn=$(mktemp /tmp/$(basename $0 .sh).XXXXXX)
 my_random=$(pwgen -n -C -s -B 20)
